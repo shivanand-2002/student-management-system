@@ -1,59 +1,127 @@
-# StudentManagementSystem
+# 🎓 Student Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.26.
+A responsive **Student Management System** built with **Angular** that helps users manage student records through a clean dashboard. The application supports CRUD operations, search, filtering, sorting, status tracking, form validation, and browser-based data persistence.
 
-## Development server
+## 🚀 Project Overview
 
-To start a local development server, run:
+The Student Management System provides a centralized interface for adding, viewing, updating, searching, and deleting student records. It also displays dashboard statistics to make student information easier to manage.
+
+## ✨ Features
+
+- **Dashboard:** View total students, active students, and course statistics.
+- **Student Management (CRUD):** Add, view, edit, and delete student records.
+- **Search:** Find students by name, email, course, or status.
+- **Course Filtering:** Filter records by course.
+- **Sorting:** Sort students by name, course, or newest record.
+- **Status Tracking:** Mark students as Active or Inactive.
+- **Form Validation:** Validate names and email addresses and prevent duplicate email entries.
+- **Data Persistence:** Store student records in browser `localStorage`.
+- **Course Distribution:** View student counts and percentages for each course.
+- **User Feedback:** Display success and error notifications.
+- **Responsive UI:** A styled dashboard designed for a clear user experience.
+
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| Angular | Frontend framework |
+| TypeScript | Application logic and type safety |
+| HTML5 | Application structure |
+| CSS3 | Styling and responsive layout |
+| Browser localStorage | Client-side data persistence |
+| Git & GitHub | Version control and source code hosting |
+
+## 📸 Application Preview
+
+Clone the repository and run the application locally to explore the dashboard and its features.
+
+## ⚙️ Getting Started
+
+### Prerequisites
+
+Install the following before running the project:
+
+- [Node.js](https://nodejs.org/)
+- npm (included with Node.js)
+- [Angular CLI](https://angular.dev/tools/cli)
+
+### Installation
+
+**1. Clone the repository**
 
 ```bash
-ng serve
+git clone https://github.com/shivanand-2002/student-management-system.git
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+**2. Navigate to the project directory**
 
 ```bash
-ng generate component component-name
+cd student-management-system
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+**3. Install dependencies**
 
 ```bash
-ng generate --help
+npm install
 ```
 
-## Building
-
-To build the project run:
+**4. Start the development server**
 
 ```bash
-ng build
+ng serve --open
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Open `http://localhost:4200/` if the browser does not open automatically.
 
-## Running unit tests
+The application will reload when you make changes to the source files.
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+## 📁 Project Structure
 
-```bash
-ng test
+```text
+student-management-system/
+├── public/
+├── src/
+│   ├── app/
+│   │   ├── app.ts
+│   │   ├── app.html
+│   │   ├── app.css
+│   │   ├── student.service.ts
+│   │   ├── student.ts
+│   │   └── app.config.ts
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.css
+├── angular.json
+├── package.json
+├── package-lock.json
+└── README.md
 ```
 
-## Running end-to-end tests
+## 💡 Technical Highlights
 
-For end-to-end (e2e) testing, run:
+- Used an Angular standalone component to build the dashboard interface.
+- Created a dedicated `StudentService` to handle student data loading and saving.
+- Used TypeScript interfaces to define the structure of student records.
+- Implemented filtering, searching, and sorting to display relevant records.
+- Added validation to reduce invalid and duplicate student entries.
+- Used `localStorage` to retain student records across browser refreshes.
+- Used Angular template bindings and event handling to keep the UI interactive.
 
-```bash
-ng e2e
-```
+## 🔮 Future Improvements
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+- Integrate a backend API and database for persistent, multi-user storage.
+- Add authentication and role-based access control.
+- Implement pagination for large student datasets.
+- Add automated unit and integration tests.
+- Deploy the application and include a live demo link.
 
-## Additional Resources
+## 👨‍💻 Author
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+**Shivanand Gourkar**
+
+- GitHub: [@shivanand-2002](https://github.com/shivanand-2002)
+- Project Repository: [Student Management System](https://github.com/shivanand-2002/student-management-system)
+
+---
+
+*Built as a frontend development project to practise Angular, TypeScript, component-based architecture, form validation, and data management.*
