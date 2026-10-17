@@ -1,0 +1,354 @@
+
+<div class="app-shell">
+  <aside class="sidebar">
+    <div class="brand">SMS<span>.</span></div>
+
+    <p class="menu-label">MAIN MENU</p>
+    <a class="nav-item active">▦ &nbsp; Dashboard</a>
+    <a class="nav-item">♙ &nbsp; Students</a>
+    <a class="nav-item">▤ &nbsp; Courses</a>
+
+    <div class="sidebar-bottom">
+      Student Management System
+      <br />
+      <small>Version 2.0</small>
+    </div>
+  </aside>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">OVERVIEW</p>
+        <h1>Dashboard</h1>
+      </div>
+
+      <div class="profile">
+        <div class="avatar">SG</div>
+        <div>
+          <strong>Admin User</strong>
+          <br />
+          <small>Administrator</small>
+        </div>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <div>
+        <h2>Welcome back! 👋</h2>
+        <p>Here's what's happening with your students today.</p>
+      </div>
+
+      <button
+        class="primary-btn"
+        type="button"
+        (click)="showAddForm = !showAddForm; cancelEdit()">
+        + Add Student
+      </button>
+    </section>
+
+    <!-- DASHBOARD STATISTICS -->
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-icon blue">♙</div>
+        <p>Total Students</p>
+        <h2>{{ students.length }}</h2>
+        <small>Registered students</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon green">✓</div>
+        <p>Active Students</p>
+        <h2>{{ activeStudentCount }}</h2>
+        <small>Currently enrolled</small>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-icon purple">▤</div>
+        <p>Courses</p>
+        <h2>{{ courseCount }}</h2>
+        <small>Available courses</small>
+      </article>
+    </section>
+
+    <!-- COURSE DISTRIBUTION -->
+    <section class="panel analytics-panel">
+      <div class="analytics-heading">
+        <div>
+          <p class="eyebrow">ACADEMIC OVERVIEW</p>
+          <h2>Course distribution</h2>
+          <p>Student enrollment across available courses.</p>
+        </div>
+        <span class="analytics-badge">LIVE DATA</span>
+      </div>
+
+      <div class="course-chart">
+        @for (item of courseDistribution; track item.name; let i = $index) {
+          <div class="course-row">
+            <div class="course-info">
+              <span class="course-dot dot-{{ i }}"></span>
+              <span>{{ item.name }}</span>
+              <strong>{{ item.count }}</strong>
+            </div>
+
+            <div class="bar-track">
+              <div
+                class="bar-fill bar-{{ i }}"
+                [style.width.%]="item.percent">
+              </div>
+            </div>
+
+            <small>{{ item.percent }}%</small>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- ADD STUDENT FORM -->
+    @if (showAddForm) {
+      <section class="panel form-panel">
+        <h2>Add New Student</h2>
+
+        <form (submit)="addStudent($event)">
+          <input
+            placeholder="Full name"
+            [value]="newName"
+            (input)="newName = $any($event.target).value"
+            required
+          />
+
+          <input
+            type="email"
+            placeholder="Email address"
+            [value]="newEmail"
+            (input)="newEmail = $any($event.target).value"
+            required
+          />
+
+          <select
+            [value]="newCourse"
+            (change)="newCourse = $any($event.target).value">
+            @for (course of courses; track course) {
+              <option [value]="course">{{ course }}</option>
+            }
+          </select>
+          
+<label class="status-field">
+  <span>Student Status</span>
+  <select
+    [value]="newStatus"
+    (change)="newStatus = $any($event.target).value">
+    @for (status of statuses; track status) {
+      <option [value]="status">{{ status }}</option>
+    }
+  </select>
+</label>
+
+
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">
+              Save Student
+            </button>
+
+            <button
+              class="secondary-btn"
+              type="button"
+              (click)="showAddForm = false">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+    }
+
+    <!-- EDIT STUDENT FORM -->
+    @if (editingStudentId !== null) {
+      <section class="panel form-panel">
+        <h2>Edit Student</h2>
+
+        <form (submit)="saveEdit($event)">
+          <input
+            placeholder="Full name"
+            [value]="editName"
+            (input)="editName = $any($event.target).value"
+            required
+          />
+
+          <input
+            type="email"
+            placeholder="Email address"
+            [value]="editEmail"
+            (input)="editEmail = $any($event.target).value"
+            required
+          />
+
+          <select
+            [value]="editCourse"
+            (change)="editCourse = $any($event.target).value">
+            @for (course of courses; track course) {
+              <option [value]="course">{{ course }}</option>
+            }
+          </select>
+          
+<label class="status-field">
+  <span>Student Status</span>
+  <select
+    [value]="editStatus"
+    (change)="editStatus = $any($event.target).value">
+    @for (status of statuses; track status) {
+      <option [value]="status">{{ status }}</option>
+    }
+  </select>
+</label>
+
+
+          <div class="form-actions">
+            <button class="primary-btn" type="submit">
+              Save Changes
+            </button>
+
+            <button
+              class="secondary-btn"
+              type="button"
+              (click)="cancelEdit()">
+              Cancel
+            </button>
+          </div>
+        </form>
+      </section>
+    }
+
+    <!-- STUDENT DIRECTORY -->
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <h2>Student Directory</h2>
+          <p>Manage and view all registered students.</p>
+        </div>
+
+        <input
+          class="search-box"
+          placeholder="Search students..."
+          [value]="searchTerm"
+          (input)="searchTerm = $any($event.target).value"
+        />
+      </div>
+
+      <!-- FILTER AND SORT CONTROLS -->
+      <div class="directory-controls">
+        <label class="filter-control">
+          <span>Filter by course</span>
+          <select
+            [value]="selectedCourse"
+            (change)="selectedCourse = $any($event.target).value">
+            <option value="All Courses">All Courses</option>
+            @for (course of courses; track course) {
+              <option [value]="course">{{ course }}</option>
+            }
+          </select>
+        </label>
+
+        <label class="filter-control">
+          <span>Sort by</span>
+          <select
+            [value]="sortBy"
+            (change)="sortBy = $any($event.target).value">
+            <option value="name">Student name</option>
+            <option value="course">Course</option>
+            <option value="newest">Recently added</option>
+          </select>
+        </label>
+
+        <span class="result-count">
+          {{ filteredStudents.length }} result(s)
+        </span>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>STUDENT</th>
+              <th>EMAIL ADDRESS</th>
+              <th>COURSE</th>
+              <th>STATUS</th>
+              <th>ACTION</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (student of filteredStudents; track student.id) {
+              <tr>
+                <td>
+                  <div class="student-cell">
+                    <div class="student-avatar">
+                      {{ student.name.charAt(0) }}
+                    </div>
+                    <strong>{{ student.name }}</strong>
+                  </div>
+                </td>
+
+                <td>{{ student.email }}</td>
+                <td>{{ student.course }}</td>
+
+                
+<td>
+  <span
+    class="status"
+    [class.status-inactive]="student.status === 'Inactive'">
+    {{ student.status }}
+  </span>
+</td>
+
+
+                <td>
+                  <button
+                    class="edit-btn"
+                    type="button"
+                    (click)="startEdit(student)">
+                    Edit
+                  </button>
+
+                  <button
+                    class="delete-btn"
+                    type="button"
+                    (click)="deleteStudent(student.id)">
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            } @empty {
+              <tr>
+                <td colspan="5" class="empty-state">
+                  No students found. Try changing your search or filter.
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <p class="table-footer">
+        Showing {{ filteredStudents.length }} student(s)
+      </p>
+    </section>
+
+    <!-- SUCCESS AND ERROR NOTIFICATIONS -->
+    @if (toastMessage) {
+      <div
+        class="toast"
+        [class.toast-error]="toastType === 'error'"
+        role="status">
+        <span>{{ toastType === 'error' ? '!' : '✓' }}</span>
+        {{ toastMessage }}
+
+
+        <button
+          type="button"
+          aria-label="Dismiss notification"
+          (click)="toastMessage = ''">
+          ×
+        </button>
+      </div>
+    }
+  </main>
+</div>
